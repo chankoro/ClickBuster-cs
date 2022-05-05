@@ -52,6 +52,7 @@ namespace ClickBuster_cs
                 // オーナーに画像を張り付け
                 _enemyOwner.Controls.Add(_pbImgEnemy);
             }
+
             /// <summary>
             /// 画像クリックイベント
             /// </summary>
@@ -61,18 +62,19 @@ namespace ClickBuster_cs
             {
                OnClick(this, e);
             }
-            /// <summary>
-            /// 敵画像をランダムな場所に作成
-            /// </summary>
-            private void _RandPlace()
-            {
-               // 出現場所はオーナーの範囲にする
-               // 高さ
-               var intTop = _rnd.Next(_enemyOwner.Size.Height - _pbImgEnemy.Size.Height);
-               _pbImgEnemy.Top = intTop;
-               // 横
-               var intLeft = _rnd.Next(_enemyOwner.Size.Width - _pbImgEnemy.Size.Width);
-               _pbImgEnemy.Left = intLeft;
+
+        /// <summary>
+        /// 敵画像をランダムな場所に作成
+        /// </summary>
+        private void _RandPlace()
+        {
+            // 出現場所はオーナーの範囲にする
+            // 高さ
+            var intTop = _rnd.Next(_enemyOwner.Size.Height - _pbImgEnemy.Size.Height);
+            _pbImgEnemy.Top = intTop;
+            // 横
+            var intLeft = _rnd.Next(_enemyOwner.Size.Width - _pbImgEnemy.Size.Width);
+            _pbImgEnemy.Left = intLeft;
 
             // 敵のパターン(画像と得点)をランダムに指定する
             _intMovePattern = _rnd.Next(1, 4);
@@ -99,119 +101,245 @@ namespace ClickBuster_cs
                     _intTokuten = 3000;
                     break;
             }
-            /// <summary>
-            /// 動かす(オーナーの中での動き)
-            /// </summary>
-            public void MvEnm()
-            {
-                switch (_intMovePattern)
-                {
-                    case 1:
-                        //-----------------------
-                        // enemy1
-                        // 完全ランダムな動き
-                        //-----------------------
-                        var intMv = _rnd.Next(1, 5);
-                        switch (intMv)
-                        {
-                            case 1:
-                                // 下
-                                if((_pbImgEnemy.Top + _pbImgEnemy.Height + _intMvwd) < _enemyOwner.Height)
-                                {
-                                    _pbImgEnemy.Top += _intMvwd;
-                                }
-                                break;
-                            case 2:
-                                // 上
-                                if ((_pbImgEnemy.Top - _intMvwd) > 0)
-                                {
-                                    _pbImgEnemy.Top -= _intMvwd;
-                                }
-                                break;
-                            case 3:
-                                // 右
-                                if((_pbImgEnemy.Left + _pbImgEnemy.Width + _intMvwd) < _enemyOwner.Width)
-                                {
-                                    _pbImgEnemy.Left += _intMvwd;
-                                }
-                                break;
-                            case 4:
-                                // 左
-                                if((_pbImgEnemy.Left - _intMvwd) > 0)
-                                {
-                                    _pbImgEnemy.Left -= _intMvwd;
-                                }
-                                break;
-                        }
-                        break;
-                    case 2:
-                        //-----------------------------
-                        // enemy2
-                        // 上下左右にぶつかるまで動く
-                        //-----------------------------
-                        if(_intMvud == 0)
-                        {
-                            // 初回時だけは上下左右どちらに進むか決める
-                            _intMvud = _rnd.Next(1, 5);
-                        }
-
-                        switch (_intMvud)
-                        {
-                            case 1:
-                                // 下
-                                if((_pbImgEnemy.Top + _pbImgEnemy.Height + _intMvwd) < _enemyOwner.Height)
-                                {
-                                    _pbImgEnemy.Top += _intMvwd;
-                                }
-                                else
-                                {
-                                    _intMvud = _rnd.Next(1, 5);
-                                }
-                                break;
-                            case 2:
-                                // 上
-                                if((_pbImgEnemy.Top - _intMvwd) > 0)
-                                {
-                                    _pbImgEnemy.Top -= _intMvwd;
-                                }
-                                break;
-                            case 3:
-                                // 右
-                                if((_pbImgEnemy.Left + _pbImgEnemy.Width + _intMvwd) < _enemyOwner.Width)
-                                {
-                                    _pbImgEnemy.Left += _intMvwd;
-                                }
-                                else
-                                {
-                                    _intMvud = _rnd.Next(1, 5);
-                                }
-                                break;
-                            case 4:
-                                // 左
-                                if ((_pbImgEnemy.Left - _intMvwd) > 0)
-                                {
-                                    _pbImgEnemy.Left -= _intMvwd;
-                                }
-                                else
-                                {
-                                    _intMvud = _rnd.Next(1, 5);
-                                }
-                                break;
-                        }
-
-                        break;
-                    case 3:
-
-                        break;
-                }
-                
-
-            }
-            }
         }
 
-        
-           
+        /// <summary>
+        /// 動かす(オーナーの中での動き)
+        /// </summary>
+        public void MvEnm()
+        {
+            switch (_intMovePattern)
+            {
+                case 1:
+                    //-----------------------
+                    // enemy1
+                    // 完全ランダムな動き
+                    //-----------------------
+                    var intMv = _rnd.Next(1, 5);
+                    switch (intMv)
+                    {
+                        case 1:
+                            // 下
+                            if ((_pbImgEnemy.Top + _pbImgEnemy.Height + _intMvwd) < _enemyOwner.Height)
+                            {
+                                _pbImgEnemy.Top += _intMvwd;
+                            }
+                            break;
+                        case 2:
+                            // 上
+                            if ((_pbImgEnemy.Top - _intMvwd) > 0)
+                            {
+                                _pbImgEnemy.Top -= _intMvwd;
+                            }
+                            break;
+                        case 3:
+                            // 右
+                            if ((_pbImgEnemy.Left + _pbImgEnemy.Width + _intMvwd) < _enemyOwner.Width)
+                            {
+                                _pbImgEnemy.Left += _intMvwd;
+                            }
+                            break;
+                        case 4:
+                            // 左
+                            if ((_pbImgEnemy.Left - _intMvwd) > 0)
+                            {
+                                _pbImgEnemy.Left -= _intMvwd;
+                            }
+                            break;
+                    }
+                    break;
+                case 2:
+                    //-----------------------------
+                    // enemy2
+                    // 上下左右にぶつかるまで動く
+                    //-----------------------------
+                    if (_intMvud == 0)
+                    {
+                        // 初回時だけは上下左右どちらに進むか決める
+                        _intMvud = _rnd.Next(1, 5);
+                    }
 
-        
-    }
+                    switch (_intMvud)
+                    {
+                        case 1:
+                            // 下
+                            if ((_pbImgEnemy.Top + _pbImgEnemy.Height + _intMvwd) < _enemyOwner.Height)
+                            {
+                                _pbImgEnemy.Top += _intMvwd;
+                            }
+                            else
+                            {
+                                _intMvud = _rnd.Next(1, 5);
+                            }
+                            break;
+                        case 2:
+                            // 上
+                            if ((_pbImgEnemy.Top - _intMvwd) > 0)
+                            {
+                                _pbImgEnemy.Top -= _intMvwd;
+                            }
+                            break;
+                        case 3:
+                            // 右
+                            if ((_pbImgEnemy.Left + _pbImgEnemy.Width + _intMvwd) < _enemyOwner.Width)
+                            {
+                                _pbImgEnemy.Left += _intMvwd;
+                            }
+                            else
+                            {
+                                _intMvud = _rnd.Next(1, 5);
+                            }
+                            break;
+                        case 4:
+                            // 左
+                            if ((_pbImgEnemy.Left - _intMvwd) > 0)
+                            {
+                                _pbImgEnemy.Left -= _intMvwd;
+                            }
+                            else
+                            {
+                                _intMvud = _rnd.Next(1, 5);
+                            }
+                            break;
+                    }
+                    break;
+                case 3:
+                    //--------------------------
+                    // enemy3
+                    // ななめに動く
+                    //-------------------------
+                    if (_intMvud == 0)
+                    {
+                        // 初回時だけは上下左右のななめに進むか決める
+                        _intMvud = _rnd.Next(1, 5);
+                    }
+
+                    switch (_intMvud)
+                    {
+                        case 1:
+                            // 斜め右下
+                            if ((_pbImgEnemy.Top + _pbImgEnemy.Height + _intMvwd) < _enemyOwner.Height)
+                            {
+                                _pbImgEnemy.Top += _intMvwd;
+                            }
+                            else
+                            {
+                                _intMvud = _rnd.Next(1, 5);
+                            }
+
+                            if (((_pbImgEnemy.Top + _pbImgEnemy.Height + _intMvwd) < _enemyOwner.Height) &&
+                                ((_pbImgEnemy.Left + _pbImgEnemy.Width + _intMvwd) < _enemyOwner.Width))
+                            {
+                                _pbImgEnemy.Top += _intMvwd;
+                                _pbImgEnemy.Left += _intMvwd;
+                            }
+                            else
+                            {
+                                //　次は跳ね返った位置
+                                if ((_pbImgEnemy.Top + _pbImgEnemy.Height + _intMvwd) >= _enemyOwner.Height)
+                                {
+                                    // 斜め右上
+                                    _intMvud = 2;
+                                }
+                                else if ((_pbImgEnemy.Left + _pbImgEnemy.Width + _intMvwd) >= _enemyOwner.Width)
+                                {
+                                    // 斜め左下
+                                    _intMvud = 3;
+                                }
+                            }
+                            break;
+                        case 2:
+                            // 斜め右上
+                            if (((_pbImgEnemy.Top - _intMvwd) > 0) &&
+                                (_pbImgEnemy.Left + _pbImgEnemy.Width + _intMvwd) < _enemyOwner.Width)
+                            {
+                                _pbImgEnemy.Top -= _intMvwd;
+                                _pbImgEnemy.Left += _intMvwd;
+                            }
+                            else
+                            {
+                                // 次は跳ね返った位置
+                                if ((_pbImgEnemy.Top - _intMvwd) <= 0)
+                                {
+                                    // 斜め右下
+                                    _intMvud = 1;
+                                }
+                                else if ((_pbImgEnemy.Left + _pbImgEnemy.Width + _intMvwd) >= _enemyOwner.Width)
+                                {
+                                    // 斜め左下
+                                    _intMvud = 4;
+                                }
+                            }
+                            break;
+                        case 3:
+                            // 斜め左下
+                            if (((_pbImgEnemy.Left - _intMvwd) > 0) &&
+                                ((_pbImgEnemy.Top + _pbImgEnemy.Height + _intMvwd) < _enemyOwner.Height))
+                            {
+                                _pbImgEnemy.Top += _intMvwd;
+                                _pbImgEnemy.Left -= _intMvwd;
+                            }
+                            else
+                            {
+                                // 次は跳ね返った位置
+                                if ((_pbImgEnemy.Left - _intMvwd) <= 0)
+                                {
+                                    // 斜め右下
+                                    _intMvud = 1;
+                                }
+                                else if ((_pbImgEnemy.Top + _pbImgEnemy.Height + _intMvwd) >= _enemyOwner.Height)
+                                {
+                                    // 斜め左上
+                                    _intMvud = 4;
+                                }
+                            }
+                            break;
+                        case 4:
+                            // 斜め左上
+                            if (((_pbImgEnemy.Left - _intMvwd) > 0) &&
+                                ((_pbImgEnemy.Top - _intMvwd) > 0))
+                            {
+                                _pbImgEnemy.Top -= _intMvwd;
+                                _pbImgEnemy.Left -= _intMvwd;
+                            }
+                            else
+                            {
+                                // 次は跳ね返った位置
+                                if ((_pbImgEnemy.Left - _intMvwd) <= 0)
+                                {
+                                    // 斜め右上
+                                    _intMvud = 2;
+                                }
+                                else if ((_pbImgEnemy.Top - _intMvwd) <= 0)
+                                {
+                                    // 斜め左下
+                                    _intMvud = 3;
+                                }
+                            }
+                            break;
+                    }
+                    break;
+            }
+        }
+                        /// <summary>
+                        /// 敵が倒されたイベント
+                        /// </summary>
+                        public void EnemyDown()
+                        {
+                            // 違う場所に出現する
+                            _RandPlace();
+                        }
+
+                        /// <summary>
+                        /// 敵の得点のゲット
+                        /// </summary>
+                        /// <returns></returns>
+                        public int GetTokuten()
+                        {
+                            return _intTokuten;
+                        }
+        }
+                
+
+}
+
