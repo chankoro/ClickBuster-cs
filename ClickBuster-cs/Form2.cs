@@ -13,6 +13,33 @@ namespace ClickBuster_cs
 {
     public partial class F_Main : Form
     {
+        // 敵の数
+        public int Enms;
+
+        // 敵の動くスピード
+        public int EnmTim;
+
+        // 残り時間(秒数)
+        public int GmTim;
+
+        /// <summary>
+        /// 難易度初期化
+        /// </summary>
+        public void FrmIni()
+        {
+            // フォームのサイズでコントロールを配置する
+            P_Enemy.Height = Height - P_Enemy.Top - 45;
+            P_Enemy.Width = Width - 40;
+
+            // 合計得点
+            L_Sum.Text = "0";
+            // 敵の動くスピード
+            T_Enemy.Interval = EnmTim;
+            // 残り時間の初期化
+            PG_Jikan.Maximum = GmTim / 1000;
+            PG_Jikan.Value = PG_Jikan.Maximum;
+        }
+
         // ランダム変数
         private Random _rnd = new Random();
 
@@ -40,7 +67,7 @@ namespace ClickBuster_cs
             B_Start.Enabled = false;
 
             // 敵を作る
-            for(int i = 0; i <= 9; i++)
+            for(int i = 0; i <= Enms - 1; i++)
             {
                 // 配列時に敵classを生成。その際にオーナーのパネルとランダム変数を渡しす。
                 _enemies.Add(new CEnemy(P_Enemy, _rnd));
